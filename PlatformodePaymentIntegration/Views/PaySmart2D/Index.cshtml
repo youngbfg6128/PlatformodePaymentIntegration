@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  
+
+    <div class="container mt-4">
+        <h2>2D Ödeme İşlemi</h2>
+
+        <!-- Form -->
+        <form method="post" asp-action="ProcessPayment">
+            <div class="form-group">
+                <label for="invoice_id" class="mt-2">Fatura ID:</label>
+                <input type="text" class="form-control" id="invoice_id" name="InvoiceId" required>
+            </div>
+            <div class="form-group">
+                <label for="cc_holder_name">Kart Sahibi Adı:</label>
+                <input type="text" class="form-control" id="cc_holder_name" name="CcHolderName" required>
+            </div>
+            <div class="form-group">
+                <label for="cc_no">Kart Numarası:</label>
+                <input type="text" class="form-control" id="cc_no" name="CcNo" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="expiry_month">Son Kullanım Ayı (AA):</label>
+                    <input type="text" class="form-control" id="expiry_month" name="ExpiryMonth" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="expiry_year">Son Kullanım Yılı (YYYY):</label>
+                    <input type="text" class="form-control" id="expiry_year" name="ExpiryYear" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV:</label>
+                <input type="text" class="form-control" id="cvv" name="Cvv" required>
+            </div>
+            <div class="form-group">
+                <label for="total">Tutar:</label>
+                <input type="text" class="form-control" id="total" name="Total" required>
+            </div>
+            <div class="form-group">
+                <label for="installments_number">Taksit Sayısı:</label>
+                <input type="text" class="form-control" id="installments_number" name="InstallmentsNumber" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="transaction_type">Ödeme Tipi Seçiniz:</label>
+                <select class="form-control" id="transaction_type" name="TransactionType" required>
+                    <option value="Auth">Auth</option>
+                    <option value="PreAuth">PreAuth</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Ödemeyi Gönder</button>
+        </form>
+
+        @if (ViewData["Result"] != null)
+        {
+            <div class="mt-4">
+                <h3>API Yanıtı</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Parametre</th>
+                            <th>Değer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (Dictionary<string, string>)ViewData["Result"])
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
